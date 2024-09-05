@@ -27,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -80,6 +79,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
+MEDIA_URL = '/media/'  # The URL path to access the media files
+MEDIA_ROOT = BASE_DIR / 'media'  # Directory to store media files
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases

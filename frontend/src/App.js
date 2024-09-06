@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import react from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import NotFound from "./pages/NotFound";
+import Register from "./pages/Register";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function Logout() {
+    localStorage.clear();
+    return <Navigate to="/login"></Navigate>
 }
 
-export default App;
+function RegisterAndLogout() {
+    localStorage.clear();
+    return <Register />;
+}
+
+function App() {
+
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Home/>}/>
+                <Route path="/login" element={<Login />}/>
+                <Route path="/logout" element={<Logout />}/>
+                <Route path="/register" element={<RegisterAndLogout />}/>
+                <Route path="*" element={<NotFound />}/>
+            </Routes>
+
+        </BrowserRouter>
+    )
+}
+
+export default App

@@ -9,6 +9,7 @@ from .serializers import UserSerializer, PizzaSerializer
 class PizzaListView(ListAPIView):
     permission_classes = [AllowAny]
     serializer_class = PizzaSerializer
+    queryset = Pizza.objects.all()
 
 class PizzaCreateView(CreateAPIView):
     permission_classes = [AllowAny]

@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import Register from "./pages/Register";
+import Pizza from "./pages/Pizza";
 
 function Logout() {
     localStorage.clear();
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/login" element={<Login />}/>
                 <Route path="/logout" element={<Logout />}/>
                 <Route path="/register" element={<RegisterAndLogout />}/>
+                <Route path="/pizzas/:id" element={<Pizza />} />
                 <Route path="*" element={<NotFound />}/>
             </Routes>
 

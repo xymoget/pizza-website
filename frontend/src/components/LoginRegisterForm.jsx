@@ -10,6 +10,7 @@ function LoginRegisterForm({route, method}) {
     const navigate = useNavigate();
 
     const submitForm = async (e) => {
+        e.preventDefault();
         const res = await api.post(route, {username, password});
         if (method === "login") {
             localStorage.setItem(ACCESS_TOKEN, res.data.access);

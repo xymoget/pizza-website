@@ -9,8 +9,8 @@ class PizzaSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["id", "username", "password"]
-        extra_kwargs = {"password": {"write_only": True}}
+        fields = ["username", "password"]
+        # extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
         password = validated_data.pop('password')

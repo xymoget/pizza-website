@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.generics import ListAPIView, CreateAPIView, DestroyAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import Pizza, User
-from serializers import UserSerializer, PizzaSerializer
+from .serializers import UserSerializer, PizzaSerializer
 
 class PizzaListView(ListAPIView):
     permission_classes = [AllowAny]

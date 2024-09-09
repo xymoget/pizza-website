@@ -8,10 +8,11 @@ import Register from "./pages/Register";
 import Pizza from "./pages/Pizza";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Profile from "./pages/Profile";
 
 function Logout() {
     localStorage.clear();
-    return <Navigate to="/login"></Navigate>
+    return <Navigate to="/"></Navigate>
 }
 
 function RegisterAndLogout() {
@@ -27,6 +28,7 @@ function App() {
                 <Header></Header>
                 <Routes>
                     <Route path="/" element={<Home/>}/>
+                    <Route path="/profile" element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
                     <Route path="/login" element={<Login />}/>
                     <Route path="/logout" element={<Logout />}/>
                     <Route path="/register" element={<RegisterAndLogout />}/>

@@ -9,8 +9,13 @@ function ProtectedRoute({children}) {
     const [isAuthorized, setIsAuthorized] = useState(null);
 
     useEffect(() => {
-        setIsAuthorized(checkAuth());
-    })
+        verifyAuth();
+    }, [])
+
+    const verifyAuth = async () => {
+        const result = await checkAuth();
+        setIsAuthorized(result);
+    }
 
     if (isAuthorized === null) {
         return <div>Loading...</div>

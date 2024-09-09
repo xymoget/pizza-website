@@ -4,7 +4,7 @@ import api from "./api";
 
 export async function checkAuth() {
     const token = localStorage.getItem(ACCESS_TOKEN);
-    if (!token) {
+    if (token === null) {
         return false;
     }
     const decoded = jwtDecode(token);
@@ -12,7 +12,8 @@ export async function checkAuth() {
     const now = Date.now() / 1000;
     
     if (tokenExpiration < now) {
-        return await refreshToken();
+        console.log(2);
+        return (await refreshToken());
     } else {
         return true;
     }

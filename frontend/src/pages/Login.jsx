@@ -8,12 +8,11 @@ function Login() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        redirectAuth();
+        navigateAuth();
     }, [])
 
-    const redirectAuth = async () => {
-        const isAuthorized = checkAuth();
-        if (isAuthorized) {
+    const navigateAuth = async () => {
+        if (await checkAuth() === true) {
             navigate("/");
         }
     }

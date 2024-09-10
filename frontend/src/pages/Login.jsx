@@ -3,6 +3,7 @@ import LoginRegisterForm from "../components/LoginRegisterForm";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { checkAuth } from "../utils";
+import "../styles/styles.css";
 
 function Login() {
     const navigate = useNavigate();
@@ -17,8 +18,8 @@ function Login() {
         }
     }
 
-    return (<div>
-            <h1>Login</h1>
+    return (
+        <div className="form-wrapper">
             <LoginRegisterForm method="login" route="api/token/"></LoginRegisterForm>
         </div>
     )

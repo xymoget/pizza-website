@@ -9,6 +9,7 @@ import Pizza from "./pages/Pizza";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Profile from "./pages/Profile";
+import Pizzas from "./pages/Pizzas";
 
 function Logout() {
     localStorage.clear();
@@ -33,6 +34,7 @@ function App() {
                     <Route path="/logout" element={<Logout />}/>
                     <Route path="/register" element={<RegisterAndLogout />}/>
                     <Route path="/pizzas/:id" element={<Pizza />} />
+                    <Route path="/pizzas" element={<Pizzas />}/>
                     <Route path="*" element={<NotFound />}/>
                 </Routes>
                 <Footer></Footer>

@@ -3,7 +3,7 @@ import LoginRegisterForm from "../components/LoginRegisterForm";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { checkAuth } from "../utils";
-import "../styles/styles.css";
+import "../styles/Login.css";
 
 function Login() {
     const navigate = useNavigate();

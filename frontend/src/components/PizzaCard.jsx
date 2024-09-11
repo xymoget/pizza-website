@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const PizzaCard = ({pizza}) => {
     return (
-        <Link to={`pizzas/${pizza.id}`} style={ {textDecoration: 'none'} }>
+        <Link to={`/pizzas/${pizza.id}`} style={ {textDecoration: 'none'} }>
             <Card sx={{ maxWidth: 345, margin: 2 }}>
                 <CardMedia
                     component="img"

@@ -26,7 +26,6 @@ function App() {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <BrowserRouter>
-                <Header></Header>
                 <Routes>
                     <Route path="/" element={<Home/>}/>
                     <Route path="/profile" element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
@@ -37,7 +36,6 @@ function App() {
                     <Route path="/pizzas" element={<Pizzas />}/>
                     <Route path="*" element={<NotFound />}/>
                 </Routes>
-                <Footer></Footer>
             </BrowserRouter>
         </div>
     )

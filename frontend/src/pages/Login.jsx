@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { checkAuth } from "../utils";
 import "../styles/Login.css";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 function Login() {
     const navigate = useNavigate();
@@ -19,8 +21,12 @@ function Login() {
     }
 
     return (
-        <div className="form-wrapper">
-            <LoginRegisterForm method="login" route="api/token/"></LoginRegisterForm>
+        <div>
+            <Header />
+            <div className="form-wrapper">
+                <LoginRegisterForm method="login" route="api/token/"></LoginRegisterForm>
+            </div>
+            <Footer />
         </div>
     )
 }

@@ -2,6 +2,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import api from "../api";
 import PizzaCard from "../components/PizzaCard";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 function Pizzas() {
     const [pizzas, setPizzas] = useState([])
@@ -16,9 +18,14 @@ function Pizzas() {
             .then((data) => setPizzas(data));
     }
 
-    return (<div>
-            <h1>Pizzas</h1>
-            {pizzas.map((pizza) => <PizzaCard pizza={pizza} key={pizza.id}></PizzaCard>)}
+    return (
+        <div>
+            <Header />
+            <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+                <h1>Pizzas</h1>
+                {pizzas.map((pizza) => <PizzaCard pizza={pizza} key={pizza.id}></PizzaCard>)}
+            </div>
+            <Footer />
         </div>);
 }
 

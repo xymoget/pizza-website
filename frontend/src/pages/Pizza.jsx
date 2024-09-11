@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../api";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 function Pizza() {
     const { id } = useParams();
@@ -24,12 +26,17 @@ function Pizza() {
     if (!pizza) {
         return (<h1>404 Not Found</h1>)
     } else {
-        return (<div>
-            <img src={pizza.picture} />
-            <h1>{pizza.name}</h1>
-            <p>{pizza.description}</p>
-            <h2>{pizza.price}$</h2>
-        </div>)
+        return (
+            <div>
+                <Header />
+                <div>
+                    <img src={pizza.picture} />
+                    <h1>{pizza.name}</h1>
+                    <p>{pizza.description}</p>
+                    <h2>{pizza.price}$</h2>
+                </div>
+                <Footer />
+            </div>)
     }
 }
 

@@ -20,3 +20,8 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
+    
+class CartSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pizza
+        fields = "__all__"

@@ -3,8 +3,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import ListAPIView, CreateAPIView, DestroyAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from .models import Pizza, User
-from .serializers import UserSerializer, PizzaSerializer
+from .models import Pizza, User, Cart
+from .serializers import UserSerializer, PizzaSerializer, CartSerializer
+from django.shortcuts import get_object_or_404
 
 class PizzaListView(ListAPIView):
     permission_classes = [AllowAny]
@@ -31,3 +32,43 @@ class UserCreateView(CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+class CartRetrieveView(RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = CartSerializer
+    
+    def get_queryset(self):
+        user = self.request.user
+        return Cart.objects.filter(user=user)
+    
+class CartAddPizzaView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        user = request.user
+        pizza_id = request.POST.get("pizzaId", None)
+
+        cart, created = Cart.objects.get_or_create(user=user)
+
+        pizza = get_object_or_404(Pizza, id=pizza_id)
+
+        cart.products.add(pizza)
+        
+        serializer = CartSerializer(cart)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class CartDeletePizzaView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        user = request.user
+        pizza_id = request.POST.get("pizzaId", None)
+
+        cart, created = Cart.objects.get_or_create(user=user)
+        pizza = get_object_or_404(Pizza, id=pizza_id)
+
+        cart.products.remove(pizza)
+
+        serializer = CartSerializer(cart)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)

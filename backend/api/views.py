@@ -36,9 +36,10 @@ class CartRetrieveView(RetrieveAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = CartSerializer
     
-    def get_queryset(self):
+    def get_object(self):
         user = self.request.user
-        return Cart.objects.filter(user=user)
+        cart, created = Cart.objects.get_or_create(user=user)
+        return cart
     
 class CartAddPizzaView(APIView):
     permission_classes = [IsAuthenticated]

@@ -9,4 +9,5 @@ urlpatterns = [
     path("pizzas/create/", views.PizzaCreateView.as_view()),
     path("cart/add-pizza/", views.CartAddPizzaView.as_view()),
     path("cart/remove-pizza/", views.CartDeletePizzaView.as_view()),
+    path("cart/", views.CartRetrieveView.as_view()),
 ]

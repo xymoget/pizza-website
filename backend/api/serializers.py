@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Pizza, User
+from .models import Pizza, User, Cart
 
 class PizzaSerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,5 +23,5 @@ class UserSerializer(serializers.ModelSerializer):
     
 class CartSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Pizza
+        model = Cart
         fields = "__all__"

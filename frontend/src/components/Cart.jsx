@@ -1,11 +1,14 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions, List, ListItem, ListItemText, Typography, Box, IconButton } from '@mui/material';
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions, List, ListItem, ListItemText, Typography, Box, IconButton, TextField, Avatar } from '@mui/material';
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
 import api from "../api";
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 function Cart() {
     const [products, setProducts] = useState([]);
+    const [cart, setCart] = useState(null);
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
@@ -15,15 +18,55 @@ function Cart() {
     const getCartProducts = () => {
         api.get("/api/cart/")
         .then((res) => res.data)
-        .then((data) => setProducts(data));
+        .then((data) => {
+            setCart(data);
+            setProducts(data.products);
+            console.log(data);
+        });
     }
 
     const handleClickOpen = () => {
+        getCartProducts();
         setOpen(true);
     };
 
     const handleClose = () => {
         setOpen(false);
+    };
+
+    const addPizza = (pizzaId) => {
+        api.post("/api/cart/add-pizza/", {
+            pizzaId: pizzaId
+        });
+    }
+
+    const removePizza = (pizzaId) => {
+        api.post("/api/cart/remove-pizza/", {
+            pizzaId: pizzaId
+        });
+    }
+
+    const handleQuantityChange = (pizzaId, newQuantity) => {
+        setProducts((prevProducts) =>
+            prevProducts.map((product) =>
+                product.pizza.id === pizzaId
+                    ? { ...product, quantity: newQuantity }
+                    : product
+            )
+        );
+
+        api.post("/api/cart/update-quantity/", {
+            pizzaId: pizzaId,
+            quantity: newQuantity,
+        })
+        
+        // .then((res) => res.data)
+        // .then((data) => {
+        //     setCart(data);
+        //     setProducts(data.products);
+        // });
+        
+        console.log(products)
     };
 
     return (
@@ -38,12 +81,50 @@ function Cart() {
                 <DialogContent dividers>
                     {products.length > 0 ? (
                         <List>
-                            {products.map((pizza) => (
-                                <ListItem key={pizza.id}>
-                                    <ListItemText
-                                        primary={pizza.name}
-                                        secondary={`$${pizza.price.toFixed(2)} - ${pizza.description}`}
+                            {products.map((data) => (
+                                <ListItem key={data.pizza.id}>
+                                    <Avatar
+                                        src={data.pizza.picture} 
+                                        sx={{ width: 40, height: 40, marginRight: 2 }}
                                     />
+                                    <ListItemText
+                                        primary={data.pizza.name}
+                                        secondary={`$${data.pizza.price.toFixed(2)} - ${data.pizza.description}`}
+                                    />
+                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                        <IconButton
+                                            onClick={() =>
+                                                handleQuantityChange(
+                                                    data.pizza.id,
+                                                    Math.max(data.quantity - 1, 1)
+                                                )
+                                            }
+                                            size="small"
+                                        >
+                                            <RemoveIcon />
+                                        </IconButton>
+                                        <TextField
+                                            value={data.quantity}
+                                            size="small"
+                                            sx={{ width: '50px', textAlign: 'center' }}
+                                            inputProps={{ min: 1, style: { textAlign: 'center' } }}
+                                            onChange={(e) => {
+                                                const newQuantity = Math.max(1, parseInt(e.target.value) || 1);
+                                                handleQuantityChange(data.pizza.id, newQuantity);
+                                            }}
+                                        />
+                                        <IconButton
+                                            onClick={() =>
+                                                handleQuantityChange(
+                                                    data.pizza.id,
+                                                    data.quantity + 1
+                                                )
+                                            }
+                                            size="small"
+                                        >
+                                            <AddIcon />
+                                        </IconButton>
+                                    </Box>
                                 </ListItem>
                             ))}
                         </List>

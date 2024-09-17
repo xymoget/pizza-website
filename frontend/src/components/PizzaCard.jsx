@@ -1,7 +1,7 @@
 import { Card, CardContent, CardMedia, Typography, Box } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import OrderPizzaButton from './AddPizzaButton';
+import AddPizzaButton from './AddPizzaButton';
 
 const PizzaCard = ({pizza}) => {
     return (
@@ -25,7 +25,7 @@ const PizzaCard = ({pizza}) => {
                             ${pizza.price.toFixed(2)}
                         </Typography>
                     </Box>
-                    <OrderPizzaButton />
+                    <AddPizzaButton pizzaId={pizza.id} />
                 </CardContent>
             </Card>
         </Link> 

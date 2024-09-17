@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import api from '../api';
 
-function AddPizzaButton() {
+function AddPizzaButton({pizzaId}) {
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = (e) => {
@@ -13,6 +14,15 @@ function AddPizzaButton() {
         e.preventDefault();
         setOpen(false);
     };
+
+    const handleConfirm = (e) => {
+        e.preventDefault();
+        console.log(pizzaId)
+        api.post("/api/cart/add-pizza/", {
+            pizzaId: pizzaId
+        });
+        setOpen(false);
+    }
 
     return (
         <div>
@@ -36,7 +46,7 @@ function AddPizzaButton() {
                     <Button onClick={handleClose} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={handleClose} color="primary" autoFocus>
+                    <Button onClick={handleConfirm} color="primary" autoFocus>
                         Confirm
                     </Button>
                 </DialogActions>

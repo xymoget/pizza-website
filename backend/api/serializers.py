@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Pizza, User, Cart
+from .models import Pizza, User, Cart, CartProduct
 
 class PizzaSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,7 +21,15 @@ class UserSerializer(serializers.ModelSerializer):
 
         return user
     
+class CartProductSerializer(serializers.ModelSerializer):
+    pizza = PizzaSerializer()
+
+    class Meta:
+        model = CartProduct
+        fields = ['pizza', 'quantity']
+    
 class CartSerializer(serializers.ModelSerializer):
+    products = CartProductSerializer(source="cartproduct_set", many=True)
     class Meta:
         model = Cart
         fields = "__all__"

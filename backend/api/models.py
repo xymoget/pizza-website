@@ -12,6 +12,11 @@ class Pizza(models.Model):
 
 class Cart(models.Model):
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)
-    products = models.ManyToManyField(to=Pizza, related_name="carts")
+    products = models.ManyToManyField(Pizza, through='CartProduct')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+class CartProduct(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)

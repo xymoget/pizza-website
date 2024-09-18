@@ -1,11 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions, List, ListItem, ListItemText, Typography, Box, IconButton, TextField, Avatar } from '@mui/material';
-import ShoppingCart from "@mui/icons-material/ShoppingCart";
 import api from "../api";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 function Cart() {
     const [products, setProducts] = useState([]);
@@ -79,9 +79,10 @@ function Cart() {
 
     return (
         <div>
-            <IconButton color="primary" onClick={handleClickOpen}>
-                <ShoppingCart />
-            </IconButton>
+            <Button color="inherit" onClick={handleClickOpen}>
+                <ShoppingCartIcon sx={{ color: "white", fontSize: 20, marginRight: '3px' }} />
+                Cart
+                </Button>
 
             {/* Dialog to display cart items */}
             <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">

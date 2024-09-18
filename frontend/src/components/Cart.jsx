@@ -5,11 +5,13 @@ import ShoppingCart from "@mui/icons-material/ShoppingCart";
 import api from "../api";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function Cart() {
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState(null);
     const [open, setOpen] = useState(false);
+    const [deletedItems, setDeletedItems] = useState({});
 
     useEffect(() => {
         getCartProducts();
@@ -34,17 +36,23 @@ function Cart() {
         setOpen(false);
     };
 
-    const addPizza = (pizzaId) => {
-        api.post("/api/cart/add-pizza/", {
-            pizzaId: pizzaId
-        });
-    }
+    const handleDeletePizza = (pizzaId) => {
+        setDeletedItems((prev) => ({ ...prev, [pizzaId]: true }));
 
-    const removePizza = (pizzaId) => {
-        api.post("/api/cart/remove-pizza/", {
-            pizzaId: pizzaId
-        });
-    }
+        setTimeout(() => {
+            setProducts((prevProducts) =>
+                prevProducts.filter((product) => product.pizza.id !== pizzaId)
+            );
+
+            api.post("/api/cart/remove-pizza/", { pizzaId });
+
+            setDeletedItems((prev) => {
+                const updated = { ...prev };
+                delete updated[pizzaId];
+                return updated;
+            });
+        }, 300);
+    };
 
     const handleQuantityChange = (pizzaId, newQuantity) => {
         setProducts((prevProducts) =>
@@ -59,7 +67,7 @@ function Cart() {
             pizzaId: pizzaId,
             quantity: newQuantity,
         })
-        
+
         // .then((res) => res.data)
         // .then((data) => {
         //     setCart(data);
@@ -82,9 +90,15 @@ function Cart() {
                     {products.length > 0 ? (
                         <List>
                             {products.map((data) => (
-                                <ListItem key={data.pizza.id}>
+                                <ListItem
+                                    key={data.pizza.id}
+                                    sx={{
+                                        opacity: deletedItems[data.pizza.id] ? 0 : 1, // Fade out effect
+                                        transition: "opacity 0.3s ease-out", // Add CSS transition for the fade effect
+                                    }}
+                                >
                                     <Avatar
-                                        src={data.pizza.picture} 
+                                        src={data.pizza.picture}
                                         sx={{ width: 40, height: 40, marginRight: 2 }}
                                     />
                                     <ListItemText
@@ -123,6 +137,12 @@ function Cart() {
                                             size="small"
                                         >
                                             <AddIcon />
+                                        </IconButton>
+                                        <IconButton
+                                            onClick={() => handleDeletePizza(data.pizza.id)} // Call the delete function
+                                            size="small"
+                                        >
+                                            <DeleteIcon />
                                         </IconButton>
                                     </Box>
                                 </ListItem>

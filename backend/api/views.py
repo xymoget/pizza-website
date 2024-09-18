@@ -73,10 +73,7 @@ class CartDeletePizzaView(APIView):
 
         cart_product = CartProduct.objects.get(cart=cart, pizza=pizza)
 
-        if cart_product > 1:
-            cart_product.quantity -= 1
-            cart_product.save()
-        else:
+        if cart_product:
             cart_product.delete()
 
         serializer = CartSerializer(cart)
